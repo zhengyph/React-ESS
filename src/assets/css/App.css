@@ -1,0 +1,131 @@
+body {
+    min-width: 666px;   /* 设置页面最小宽度 */
+}
+
+/* 顶部条幅 */
+header {
+    background: linear-gradient(to right, rebeccapurple, #70C6F5);
+    box-shadow: 0 10px 20px slateblue;
+    padding: 10px 0 10px; /* header部分占据的大小: 上右下左 */
+    font-weight: bold;
+    color: ghostwhite;
+    margin: auto;  /* header部分在网页的位置 */
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-size: 35px;
+    padding-left: 50px;
+    box-sizing: border-box;
+}
+
+/* 超链接标签 a 也包括 <NavLink> 和 <Link> */
+header a {
+    padding-right: 50px;
+    text-decoration: none;
+    color: #1e1e1e;
+}
+
+header a:hover {
+    text-decoration: underline;
+    color: orangered;
+}
+
+/* 表格、输入框和按钮 */
+form {
+    z-index: 1;
+    position: relative;
+    background: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 15px; /* 元素边框圆角为 15 像素，让输入框变得圆润 */
+    padding: 55px 50px 45px 50px; /* 内距：上 右 下 左 */
+    box-sizing: border-box; /* 指定元素的盒模型为 border-box，意味着 padding 和 border 不会增加元素的宽度和高度 */
+    /* 阴影1：水平偏移量 0，垂直偏移量 0，模糊半径 20，扩展半径 0，颜色为黑色，并且透明度为 0.2 */
+    box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+form h1 {
+    color: slateblue;
+    margin: 0 0 30px 0;
+}
+
+form button {
+    margin: 20px 20px 5px 20px;
+}
+
+form input, form select {
+    font-weight: bold;
+    width: 300px; /* 输入框的长度 */
+}
+
+input, select {
+    border: 0; /* 去掉了默认的边框 */
+    outline: 0; /* 输入框默认的聚焦状态的轮廓线粗细度 */
+    margin: 12px 0 12px 0;
+    padding: 12px; /* 设置元素内边距为 15 像素，增加了输入框内部的空白区域，让输入文本距离输入框边缘更远 */
+    font-size: 15px;
+    font-weight: normal;
+    border-radius: 12px;
+    background: #F2F2F2;
+    box-sizing: border-box;
+}
+
+select {
+    text-align: center;
+}
+
+input:hover, select:hover {
+    background-color: #D3F8F9;
+    transition: all 1s ease 0s;
+}
+
+input:focus, select:focus {
+    background-color: #d3e8f9;
+    transition: all 0.9s ease 0s;
+}
+
+button {
+    color: white;
+    width: 150px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 12px;
+    background: #70C6F5;
+    box-sizing: border-box;
+}
+
+button:hover, button:active { /* 暂时不用 button:focus */
+    color: #1e1e1e;
+    background-color: #1ADBE5;
+    transition: all 0.9s ease 0s;
+}
+
+table {
+    margin: auto;
+    width: 100%;
+    min-width: max-content;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: darkslateblue;
+    /*outline: 1px solid darkslateblue;*/
+    /*border: 1px solid darkslateblue;*/
+    color: palegoldenrod;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+}
+
+input[type="checkbox"] {
+    width: 13px;
+}
