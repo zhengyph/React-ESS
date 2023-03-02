@@ -186,18 +186,21 @@
     margin: 75px 0 60px 120px;
     font-weight: bold;
     font-size: large;
+    color: slateblue;
 }
 
-.orderStatusText h2 {
-    color: slateblue;
+.orderStatusText h4 {
+    text-align: center;
+    margin-right: 10%;
+    color: #222222;
 }
 
 .orderWrapper { /* 产品 table */
     box-shadow: 0 0 5px 5px rgba(106, 90, 205, 0.9);
     margin: 25px auto auto;
     max-width: fit-content;
-    max-height: 417px;
-    min-height: 149px;
+    max-height: 420px;
+    min-height: 150px;
     overflow-y: scroll;
 }
 

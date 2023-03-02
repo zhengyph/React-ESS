@@ -20,44 +20,37 @@ function Login() {
 	/* 用于设置并生成表单规范错误信息 */
 	const [formErrors, setFormErrors] = useState({ email: '', password: '' });
 
-	/* 用于追踪是否已经开始输入文本 */
-	const [hasInput, setHasInput] = useState({ email: false, password: false });
-
-	/* 用于检测用户是否已经开始输入文本，以及保存输入的文本 */
-	const handleInputChange = (event) => {
-		/**
-		 * name = event.target.name
-		 * value = event.target.value
-		 *
-		 * 这里如果写成 setFormData({ ...formData, [name]: value }); 但是用这种方式更新 state，会导致
-		 * formData 立即更新为新的值，然后组件重新渲染。这意味着每次调用 setFormData 都会导致组件重新渲染，
-		 * 即使新值与旧值完全相同。
-		 *
-		 * 而使用函数形式，会将 prevData 参数设置为 formData 的当前值，然后返回一个新的对象，该对象包含旧的
-		 * formData 的所有属性和新的属性 [name]: value。React 会在下一次渲染时更新 state，而不是立即更新，
-		 * 因此可以避免不必要的重新渲染。
-		 */
-		const { name, value } = event.target;
-		// const errors = validateFormField(name, value);
-		setFormData(prevData => ({ ...prevData, [name]: value }));
-		setFormErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
-		setHasInput(prevHasInput => ({ ...prevHasInput, [name]: true }));
-	};
-
 	/* 检查输入框内的邮箱或密码文本是否合法 */
 	function validateFormField(name, value) {
-		if (name === 'email') {
-			if (value.trim() === '') {
-				return 'Email is required';
-			} else if (!/\S+@\S+\.\S+/.test(value)) {
-				return 'Your email is invalid';
+		const errorMessages = {
+			email: {
+				required: 'Email is required',
+				invalid: 'Your email is invalid',
+			},
+			password: {
+				required: 'Password is required',
+				invalid: 'Your password must be at least 6 characters',
 			}
-		} else if (name === 'password') {
-			if (value.trim() === '') {
-				return 'Password is required';
-			} else if (value.length < 6) {
-				return 'Your password must be at least 6 characters';
-			}
+		};
+
+		const trimmedValue = value.trim();
+		switch (name) {
+			case 'email':
+				if (!trimmedValue) {
+					return errorMessages.email.required;
+				} else if (!/\S+@\S+\.\S+/.test(trimmedValue)) {
+					return errorMessages.email.invalid;
+				}
+				break;
+			case 'password':
+				if (!trimmedValue) {
+					return errorMessages.password.required;
+				} else if (trimmedValue.length < 6) {
+					return errorMessages.password.invalid;
+				}
+				break;
+			default:
+				return '';
 		}
 		return '';
 	}
@@ -67,18 +60,29 @@ function Login() {
 	 * 通过监听 formData 的变化来调用表单验证函数 validateForm，并将验证结果更新到 formErrors 状态中。
 	 */
 	useEffect(() => {
-		/* 储存错误信息 */
-		const errors = {};
+		/**
+		 * 当初次进入或刷新页面时，formData 的值为空，所以不会进行错误检查。
+		 * 只有在用户开始输入时，formData 中的值才会发生变化，从而触发这部分代码，进行错误检查并更新错误信息状态。
+		 */
+		if (formData.email || formData.password) {
+			const errors = {
+				email: validateFormField('email', formData.email),
+				password: validateFormField('password', formData.password)
+			};
+			setFormErrors(errors);
+		}
+	}, [formData]);
 
-		/* 当用户在输入框进行文本输入时，检查输入内容是否符合规范 */
-		if (hasInput.email) {
-			errors.email = validateFormField('email', formData.email);
-		}
-		if (hasInput.password) {
-			errors.password = validateFormField('password', formData.password);
-		}
-		setFormErrors(errors);
-	}, [formData, hasInput]);
+	/**
+	 * 在用户离开输入框时进行检查，通过监听 onChange 事件来保存输入的文本。
+	 * 通过监听 onBlur 事件来调用表单验证函数 validateFormField，并将验证结果更新到 formErrors 状态中。
+	 */
+	const handleInput = (event) => {
+		const { name, value } = event.target;
+		const errors = validateFormField(name, value);
+		setFormData(prevData => ({ ...prevData, [name]: value }));
+		setFormErrors(prevErrors => ({ ...prevErrors, [name]: errors }));
+	}
 
 	/**
 	 * handleSubmit 函数在用户点击按钮时进行检查和发送请求。
@@ -91,10 +95,11 @@ function Login() {
 			email: validateFormField('email', formData.email),
 			password: validateFormField('password', formData.password)
 		};
-		setFormErrors(errors);
 
 		/* 如果错误信息 errors 里每个 key 的值都为空，则进行跳转 */
-		if (Object.values(errors).every(value => value === '')) {
+		const hasErrors = Object.values(errors).some(value => value !== '');
+
+		if (!hasErrors) {
 			/* 用于更新 store 中的 email 属性和 password 属性 */
 			dispatch(setEmail(formData.email));
 			dispatch(setPassword(formData.password));
@@ -112,23 +117,24 @@ function Login() {
 			/* 先等待当前执行栈中的任务完成，再执行跳转 */
 			setTimeout(() => { navigate('/complete-your-profile') });
 		}
+		setFormErrors(errors);
 	}
 
 	return (
 		<form className={styles.loginBox} onSubmit={handleSubmit}>
 			<h1>Welcome to ESS</h1>
 			<div>
-				<input type="text" name="email"
-					   placeholder="email" autoComplete="off"
-					   value={formData.email} onChange={handleInputChange}/>
+				<input type="text" name="email" placeholder="email"
+					   autoComplete="off" value={formData.email}
+					   onBlur={handleInput} onChange={handleInput}/>
 			</div>
 			<div className={styles["error-message"]}>
 				{formErrors.email ? formErrors.email : <br/>}
 			</div>
 			<div>
-				<input type="password" name="password"
-					   placeholder="password" autoComplete="off"
-					   value={formData.password} onChange={handleInputChange}/>
+				<input type="password" name="password" placeholder="password"
+					   autoComplete="off" value={formData.password}
+					   onBlur={handleInput} onChange={handleInput}/>
 			</div>
 			<div className={styles["error-message"]}>
 				{formErrors.password ? formErrors.password : <br/>}

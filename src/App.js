@@ -1,11 +1,11 @@
 import { Provider } from 'react-redux';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import Cart from './pages/Cart';
-import Employee from "./pages/Employee";
+import Employee from './pages/Employee';
 import Login from './pages/Login';
-import OrderStatus from "./pages/OrderStatus";
+import OrderStatus from './pages/OrderStatus';
 import Profile from './pages/Profile';
-import ProfileEdit from "./pages/ProfileEdit";
+import ProfileEdit from './pages/ProfileEdit';
 import RootLayout from './components/RootLayout';
 import myStore from './store/myStore';
 import './assets/css/App.css';
@@ -13,16 +13,16 @@ import './assets/css/App.css';
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: '/',
         element: <RootLayout/>,
         children: [
-            { path: "/", element: <Navigate to="login" replace/> },
-            { path: "login", element: <Login/> },
-            { path: "complete-your-profile", element: <Profile/> },
-            { path: "employee/edit", element: <ProfileEdit/> },
-            { path: "employee", element: <Employee/> },
-            { path: "cart", element: <Cart/> },
-            { path: "order-status", element: <OrderStatus/> }
+            { path: '', element: <Navigate to="login" replace/> },
+            { path: 'login', element: <Login/> },
+            { path: 'complete-your-profile', element: <Profile/> },
+            { path: 'employee/edit', element: <ProfileEdit/> },
+            { path: 'employee', element: <Employee/> },
+            { path: 'cart', element: <Cart/> },
+            { path: 'order-status', element: <OrderStatus/> }
         ]
     }
 ]);
