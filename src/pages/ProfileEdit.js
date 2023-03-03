@@ -18,6 +18,10 @@ function ProfileEdit() {
 		province: '', department: '', address: '', contact: ''
 	});
 
+	const [hasInput, setHasInput] = useState({
+		province: false, department: false, address: false, contact: false
+	});
+
 	function validateFormField(name, value) {
 		const errorMessages = {
 			address: {
@@ -67,29 +71,31 @@ function ProfileEdit() {
 	}
 
 	useEffect(() => {
-		if (formData.address || formData.contact || formData.province || formData.department) {
-			const errors = {
-				address: validateFormField('address', formData.address),
-				contact: validateFormField('contact', formData.contact),
-				province: validateFormField('province', formData.province),
-				department: validateFormField('department', formData.department)
-			};
-			setFormErrors(errors);
+		const errors = {};
+		if (hasInput.address) {
+			errors.address = validateFormField('address', formData.address);
 		}
-	}, [formData]);
+		if (hasInput.contact) {
+			errors.contact = validateFormField('contact', formData.contact);
+		}
+		if (hasInput.province) {
+			errors.province = validateFormField('province', formData.province);
+		}
+		if (hasInput.department) {
+			errors.department = validateFormField('department', formData.department);
+		}
+		setFormErrors(errors);
+	}, [formData, hasInput]);
 
-	function handleInputChange(event) {
-		const { name, value } = event.target;
-		setFormData(prevState => ({ ...prevState, [name]: value }));
-	}
-
-	function handleInputBlur(event) {
+	const handleInput = (event) => {
 		const { name, value } = event.target;
 		const errors = validateFormField(name, value);
+		setFormData(prevData => ({ ...prevData, [name]: value }));
 		setFormErrors(prevErrors => ({ ...prevErrors, [name]: errors }));
+		setHasInput(prevHasInput => ({ ...prevHasInput, [name]: true }));
 	}
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const errors = {
 			address: validateFormField('address', formData.address),
@@ -104,7 +110,9 @@ function ProfileEdit() {
 			dispatch(setDepartment(formData.department));
 			dispatch(setAddress(formData.address));
 			dispatch(setContact(formData.contact));
-			setTimeout(() => { navigate('/employee') });
+
+			await new Promise(resolve => setTimeout(resolve, 0));
+			navigate('/employee');
 		}
 	}
 
@@ -117,8 +125,8 @@ function ProfileEdit() {
 					<tr><td className={styles["profile-left-content2"]}>Address</td>
 						<td >
 							<input type="text" name="address" autoComplete="off"
-								   className={styles["profile-right-content2"]} value={formData.address}
-								   onBlur={handleInputBlur} onChange={handleInputChange}/>
+								   className={styles["profile-right-content2"]}
+								   value={formData.address} onChange={handleInput}/>
 						</td>
 					</tr>
 					<tr><td></td>
@@ -128,8 +136,7 @@ function ProfileEdit() {
 					</tr>
 					<tr><td className={styles["profile-left-content2"]}>Province</td>
 						<td>
-							<select name="province" value={formData.province}
-									onBlur={handleInputBlur} onChange={handleInputChange}>
+							<select name="province" value={formData.province} onChange={handleInput}>
 								<option defaultValue=""></option>
 								<option value="AB">Alberta</option>
 								<option value="BC">British Columbia</option>
@@ -154,8 +161,7 @@ function ProfileEdit() {
 					</tr>
 					<tr><td className={styles["profile-left-content2"]}>Department</td>
 						<td>
-							<select name="department" value={formData.department}
-									onBlur={handleInputBlur} onChange={handleInputChange}>
+							<select name="department" value={formData.department} onChange={handleInput}>
 								<option defaultValue="" /><option>Sales</option>
 								<option>Engineering</option><option>Administration</option>
 								<option>Customer Service</option><option>Technical Support</option>
@@ -170,8 +176,8 @@ function ProfileEdit() {
 					<tr><td className={styles["profile-left-content2"]}>Contact Number</td>
 						<td>
 							<input type="tel" name="contact" autoComplete="off"
-								   className={styles["profile-right-content2"]} value={formData.contact}
-								   onBlur={handleInputBlur} onChange={handleInputChange}/>
+								   className={styles["profile-right-content2"]}
+								   value={formData.contact} onChange={handleInput}/>
 						</td>
 					</tr>
 					<tr><td></td>

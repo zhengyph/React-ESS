@@ -22,13 +22,6 @@ function Profile() {
 		province: false, department: false, address: false, contact: false
 	});
 
-	const handleInputChange = (event) => {
-		const { name, value } = event.target;
-		setFormData(prevData => ({ ...prevData, [name]: value }));
-		setFormErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
-		setHasInput(prevHasInput => ({ ...prevHasInput, [name]: true }));
-	}
-
 	function validateFormField(name, value) {
 		switch (name) {
 			case 'province':
@@ -80,7 +73,15 @@ function Profile() {
 		setFormErrors(errors);
 	}, [formData, hasInput]);
 
-	const handleSubmit = (event) => {
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		const errors = validateFormField(name, value);
+		setFormData(prevData => ({ ...prevData, [name]: value }));
+		setFormErrors(prevErrors => ({ ...prevErrors, [name]: errors }));
+		setHasInput(prevHasInput => ({ ...prevHasInput, [name]: true }));
+	}
+
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const errors = {
 			address: validateFormField('address', formData.address),
@@ -95,7 +96,9 @@ function Profile() {
 			dispatch(setDepartment(formData.department));
 			dispatch(setAddress(formData.address));
 			dispatch(setContact(formData.contact));
-			setTimeout(() => { navigate('/employee') });
+
+			await new Promise(resolve => setTimeout(resolve, 0));
+			navigate('/employee');
 		}
 	}
 
