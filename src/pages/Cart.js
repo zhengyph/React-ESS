@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { handleToggleItem, handleToggleAllItems, overBudget } from '../store/slices/cartSlice';
@@ -43,14 +43,15 @@ function Cart() {
 		}
 	}, [totalPrice, dispatch, setWarning]);
 
-	/* 监听 totalPrice 和 MAX_AMOUNT 的变化 */
+	/* 监听 totalPrice 值和 checkPrice 方法的变化 */
 	useEffect(() => { checkPrice(); }, [checkPrice, totalPrice]);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		checkPrice();
 		if (!warning) {
-			setTimeout(() => { navigate('/order-status') });
+			await new Promise(resolve => setTimeout(resolve, 0));
+			navigate('/order-status');
 		}
 	}
 

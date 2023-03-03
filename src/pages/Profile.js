@@ -109,39 +109,39 @@ function Profile() {
 				<table>
 					<tbody>
 					<tr>
-						<td className={styles["profile-left-content1"]}>First Name</td>
+						<td className={styles.profileLeftText1}>First Name</td>
 						<td>
-							<input type="text" name="firstname" className={styles["profile-right-content1"]}
+							<input type="text" name="firstname" className={styles.profileRightText1}
 								   value={profileSlice.getInitialState().usr_first_name} disabled/>
 						</td>
 					</tr>
 					<tr>
-						<td className={styles["profile-left-content1"]}>Last Name</td>
+						<td className={styles.profileLeftText1}>Last Name</td>
 						<td>
-							<input type="text" name="lastname" className={styles["profile-right-content1"]}
+							<input type="text" name="lastname" className={styles.profileRightText1}
 								   value={profileSlice.getInitialState().usr_last_name} disabled/>
 						</td>
 					</tr>
 					<tr>
-						<td className={styles["profile-left-content1"]}>Date of Birth</td>
+						<td className={styles.profileLeftText1}>Date of Birth</td>
 						<td>
-							<input type="text" name="birthday" className={styles["profile-right-content1"]}
+							<input type="text" name="birthday" className={styles.profileRightText1}
 								   value={profileSlice.getInitialState().usr_birthday} disabled/>
 						</td>
 					</tr>
-					<tr><td className={styles["profile-left-content2"]}>Address</td>
+					<tr><td className={styles.profileLeftText2}>Address</td>
 						<td >
 							<input type="text" name="address" autoComplete="off"
-								   className={styles["profile-right-content2"]}
+								   className={styles.profileRightText2}
 								   value={formData.address} onChange={handleInputChange}/>
 						</td>
 					</tr>
 					<tr><td></td>
-						<td className={styles["error-msg-profile"]}>
+						<td className={styles.errorMsgProfile}>
 							{formErrors.address ? formErrors.address : <br/>}
 						</td>
 					</tr>
-					<tr><td className={styles["profile-left-content2"]}>Province</td>
+					<tr><td className={styles.profileLeftText2}>Province</td>
 						<td>
 							<select name="province" value={formData.province} onChange={handleInputChange}>
 								<option defaultValue=""></option>
@@ -162,47 +162,48 @@ function Profile() {
 						</td>
 					</tr>
 					<tr><td></td>
-						<td className={styles["error-msg-profile"]}>
+						<td className={styles.errorMsgProfile}>
 							{formErrors.province ? formErrors.province : <br/>}
 						</td>
 					</tr>
 					<tr>
-						<td className={styles["profile-left-content1"]}>Country</td>
+						<td className={styles.profileLeftText1}>Country</td>
 						<td>
-							<input type="text" name="country" className={styles["profile-right-content1"]}
+							<input type="text" name="country" className={styles.profileRightText1}
 								   value={profileSlice.getInitialState().usr_country} disabled/>
 						</td>
 					</tr>
-					<tr><td className={styles["profile-left-content2"]}>Contact Number</td>
+					<tr><td className={styles.profileLeftText2}>Contact Number</td>
 						<td>
 							<input type="tel" name="contact" autoComplete="off"
-								   className={styles["profile-right-content2"]}
+								   className={styles.profileRightText2}
 								   value={formData.contact} onChange={handleInputChange}/>
 						</td>
 					</tr>
 					<tr><td></td>
-						<td className={styles["error-msg-profile"]}>
+						<td className={styles.errorMsgProfile}>
 							{formErrors.contact ? formErrors.contact : <br/>}
 						</td>
 					</tr>
-					<tr><td className={styles["profile-left-content2"]}>Department</td>
+					<tr><td className={styles.profileLeftText2}>Department</td>
 						<td>
 							<select name="department" value={formData.department} onChange={handleInputChange}>
 								<option defaultValue="" />
-								<option>Sales</option><option>Engineering</option><option>Administration</option>
+								<option>Sales</option><option>Engineering</option>
+								<option>Administration</option><option>Human Resource</option>
 								<option>Customer Service</option><option>Technical Support</option>
 							</select>
 						</td>
 					</tr>
 					<tr><td></td>
-						<td className={styles["error-msg-profile"]}>
+						<td className={styles.errorMsgProfile}>
 							{formErrors.department ? formErrors.department : <br/>}
 						</td>
 					</tr>
 					<tr>
-						<td className={styles["profile-left-content1"]}>Role</td>
+						<td className={styles.profileLeftText1}>Role</td>
 						<td>
-							<input type="text" name="role" className={styles["profile-right-content1"]}
+							<input type="text" name="role" className={styles.profileRightText1}
 								   value={profileSlice.getInitialState().usr_role} disabled/>
 						</td>
 					</tr>

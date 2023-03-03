@@ -2,6 +2,8 @@ import { useEffect, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setEmail, setPassword, signIn } from '../store/slices/loginSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from '../assets/css/styles.module.css'
 
 
@@ -22,6 +24,12 @@ function Login() {
 
 	/* 用于追踪是否已经开始输入文本 */
 	const [hasInput, setHasInput] = useState({ email: false, password: false });
+
+	/* 控制密码输入框的显示文本格式 */
+	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+	/* 点击切换是否显示密码文本 */
+	const togglePasswordVisibility = () => { setIsPasswordVisible(!isPasswordVisible); };
 
 	/* 检查输入框内的邮箱或密码文本是否合法 */
 	function validateFormField(name, value) {
@@ -145,22 +153,25 @@ function Login() {
 					   autoComplete="off" value={formData.email}
 					   onBlur={handleInput} onChange={handleInput}/>
 			</div>
-			<div className={styles["error-message"]}>
+			<div className={styles.errorMsg}>
 				{formErrors.email ? formErrors.email : <br/>}
 			</div>
 			<div>
-				<input type="password" name="password" placeholder="password"
+				<input id="password" type={isPasswordVisible ? 'text' : 'password'}
+					   name="password" placeholder="password"
 					   autoComplete="off" value={formData.password}
 					   onBlur={handleInput} onChange={handleInput}/>
+				<FontAwesomeIcon icon={isPasswordVisible ? faEye : faEyeSlash}
+								 className={styles.eyeIcon} onClick={togglePasswordVisibility}/>
+
 			</div>
-			<div className={styles["error-message"]}>
+			<div className={styles.errorMsg}>
 				{formErrors.password ? formErrors.password : <br/>}
 			</div>
 			<div className={styles.storeLoginInfo}>
 				<div>
-					<input
-						type="checkbox" checked={rememberMe}
-						onChange={event => setRememberMe(event.target.checked)}/>
+					<input type="checkbox" checked={rememberMe}
+						   onChange={event => setRememberMe(event.target.checked)}/>
 					<span>Remember Me</span>
 				</div>
 				<button className={styles.loginButton} type="submit">SIGN IN</button>

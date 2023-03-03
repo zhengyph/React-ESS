@@ -122,19 +122,19 @@ function ProfileEdit() {
 			<div className={styles.updateContainer}>
 				<table>
 					<tbody>
-					<tr><td className={styles["profile-left-content2"]}>Address</td>
+					<tr><td className={styles.profileLeftText2}>Address</td>
 						<td >
 							<input type="text" name="address" autoComplete="off"
-								   className={styles["profile-right-content2"]}
+								   className={styles.profileRightText2}
 								   value={formData.address} onChange={handleInput}/>
 						</td>
 					</tr>
 					<tr><td></td>
-						<td className={styles["error-msg-profile"]}>
+						<td className={styles.errorMsgProfile}>
 							{formErrors.address ? formErrors.address : <br/>}
 						</td>
 					</tr>
-					<tr><td className={styles["profile-left-content2"]}>Province</td>
+					<tr><td className={styles.profileLeftText2}>Province</td>
 						<td>
 							<select name="province" value={formData.province} onChange={handleInput}>
 								<option defaultValue=""></option>
@@ -155,33 +155,34 @@ function ProfileEdit() {
 						</td>
 					</tr>
 					<tr><td></td>
-						<td className={styles["error-msg-profile"]}>
+						<td className={styles.errorMsgProfile}>
 							{formErrors.province ? formErrors.province : <br/>}
 						</td>
 					</tr>
-					<tr><td className={styles["profile-left-content2"]}>Department</td>
+					<tr><td className={styles.profileLeftText2}>Department</td>
 						<td>
 							<select name="department" value={formData.department} onChange={handleInput}>
-								<option defaultValue="" /><option>Sales</option>
-								<option>Engineering</option><option>Administration</option>
+								<option defaultValue="" />
+								<option>Sales</option><option>Engineering</option>
+								<option>Administration</option><option>Human Resource</option>
 								<option>Customer Service</option><option>Technical Support</option>
 							</select>
 						</td>
 					</tr>
 					<tr><td></td>
-						<td className={styles["error-msg-profile"]}>
+						<td className={styles.errorMsgProfile}>
 							{formErrors.department ? formErrors.department : <br/>}
 						</td>
 					</tr>
-					<tr><td className={styles["profile-left-content2"]}>Contact Number</td>
+					<tr><td className={styles.profileLeftText2}>Contact Number</td>
 						<td>
 							<input type="tel" name="contact" autoComplete="off"
-								   className={styles["profile-right-content2"]}
+								   className={styles.profileRightText2}
 								   value={formData.contact} onChange={handleInput}/>
 						</td>
 					</tr>
 					<tr><td></td>
-						<td className={styles["error-msg-profile"]}>
+						<td className={styles.errorMsgProfile}>
 							{formErrors.contact ? formErrors.contact : <br/>}
 						</td>
 					</tr>

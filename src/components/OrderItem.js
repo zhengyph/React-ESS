@@ -1,4 +1,5 @@
-import styles from "../assets/css/styles.module.css";
+import renderStars from "./SetStars";
+import styles from '../assets/css/styles.module.css';
 
 
 function OrderItem({item}) {
@@ -17,7 +18,10 @@ function OrderItem({item}) {
 					</ul>
 				);})}
 			</td>
-			<td>{item.a_reviews}</td>
+			<td>
+				<p>{renderStars(item.a_reviews)}</p>
+				<p>{item.a_reviews}</p>
+			</td>
 			<td>${item.a_price}</td>
 		</tr>
 	);

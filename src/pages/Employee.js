@@ -11,14 +11,16 @@ function Employee() {
 	const NAMES = ["First Name", "Last Name", "Date of Birth", "Address",
 		"Province", "Country", "Contact Number", "Department", "Role"];
 
-	const handleSubmitProfileUpdate = (event) => {
+	const handleSubmitProfileUpdate = async (event) => {
 		event.preventDefault();
-		setTimeout(() => { navigate('edit') });
+		await new Promise(resolve => setTimeout(resolve, 0));
+		navigate('edit');
 	}
 
-	const handleSubmitCart = (event) => {
+	const handleSubmitCart = async (event) => {
 		event.preventDefault();
-		setTimeout(() => { navigate('/cart') });
+		await new Promise(resolve => setTimeout(resolve, 0));
+		navigate('/cart');
 	}
 
 	return (

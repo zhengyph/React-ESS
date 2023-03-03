@@ -5,41 +5,41 @@ const ASSETS = [
 		a_logo: {path: require("../../assets/image/pc1.jpg"), alt: "", width: "100", height: "100"},
 		a_brand: "Lenovo ThinkPad", a_category: "Laptop",
 		a_description: {size: "14 inch", memory: "8 GB", storage: "512 GB", processor: "Intel Core i5"},
-		a_reviews: "4.2 (420)", a_price: 1599.99, is_selected: false
+		a_reviews: "4.6", a_price: 1599.99, is_selected: false
 	},
 	{a_id: "pc2",
 		a_logo: {path: require("../../assets/image/pc2.jpg"), alt: "", width: "100", height: "100"},
 		a_brand: "Dell Inspiron", a_category: "Laptop",
 		a_description: {size: "15 inch", memory: "8 GB", storage: "512 GB", processor: "Intel Core i5"},
-		a_reviews: "4.6 (369)", a_price: 1688.88, is_selected: false
+		a_reviews: "4.9", a_price: 1688.88, is_selected: false
 	},
 	{a_id: "ms1",
 		a_logo: {path: require("../../assets/image/ms1.jpg"), alt: "", width: "100", height: "100"},
 		a_brand: "Logitech", a_category: "Mouse",
 		a_description: {switching: "1 device", connection: "USB/Bluetooth"},
-		a_reviews: "5.0 (555)", a_price: 39.99, is_selected: false
+		a_reviews: "5.0", a_price: 39.99, is_selected: false
 	},
 	{a_id: "kb1",
 		a_logo: {path: require("../../assets/image/kb1.jpg"), alt: "", width: "100", height: "100"},
 		a_brand: "Razer", a_category: "Keyboard",
 		a_description: {switching: "1 device", connection: "USB/Bluetooth"},
-		a_reviews: "4.7 (822)", a_price: 66.66, is_selected: false
+		a_reviews: "4.5", a_price: 66.66, is_selected: false
 	},
 	{a_id: "mt1",
 		a_logo: {path: require("../../assets/image/mt1.jpg"), alt: "", width: "100", height: "100"},
 		a_brand: "Acer", a_category: "Monitor",
 		a_description: {switching: "1 device", connection: "USB/Bluetooth"},
-		a_reviews: "4.5 (101)", a_price: 299.99, is_selected: false
+		a_reviews: "3.6", a_price: 299.99, is_selected: false
 	},
 	{a_id: "ch1",
 		a_logo: {path: require("../../assets/image/ch1.jpg"), alt: "", width: "100", height: "100"},
 		a_brand: "IKEA", a_category: "Chair", a_description: {color: "black"},
-		a_reviews: "4.9 (394)", a_price: 166.66, is_selected: false
+		a_reviews: "4.2", a_price: 166.66, is_selected: false
 	},
 	{a_id: "dk1",
 		a_logo: {path: require("../../assets/image/dk1.jpg"), alt: "", width: "100", height: "100"},
 		a_brand: "IKEA", a_category: "Desk", a_description: {color: "white"},
-		a_reviews: "3.5 (725)", a_price: 199.99, is_selected: false
+		a_reviews: "2.5", a_price: 199.99, is_selected: false
 	}
 ];
 
