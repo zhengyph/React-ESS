@@ -18,43 +18,46 @@ function ProfileEdit() {
 		province: '', department: '', address: '', contact: ''
 	});
 
-	const [hasInput, setHasInput] = useState({
-		province: false, department: false, address: false, contact: false
-	});
-
-	const handleInputChange = (event) => {
-		const { name, value } = event.target;
-		setFormData(prevData => ({ ...prevData, [name]: value }));
-		setFormErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
-		setHasInput(prevHasInput => ({ ...prevHasInput, [name]: true }));
-	}
-
 	function validateFormField(name, value) {
+		const errorMessages = {
+			address: {
+				required: 'Address is required',
+				invalid1: 'You have exceeded the maximum input limit of 100 characters',
+				invalid2: 'Please provide a valid address with alphanumeric characters'
+			},
+			contact: {
+				required: 'Contact number is required',
+				invalid: 'Please provide a valid contact number'
+			},
+			department: { required: 'Department is required' },
+			province: { required: 'Province is required' }
+		}
+
 		switch (name) {
-			case 'province':
-				if (!value) {
-					return 'Province is required';
-				}
-				break;
-			case 'department':
-				if (!value) {
-					return 'Department is required';
-				}
-				break;
 			case 'address':
 				if (value.trim() === '') {
-					return 'Address is required';
+					return errorMessages.address.required;
 				} else if (value.length > 100) {
-					return 'You have exceeded the maximum input limit of 100 characters';
+					return errorMessages.address.invalid1;
 				} else if (!/(?=.*\d)(?=.*[a-zA-Z])(?=.*\s)/.test(value)) {
-					return 'Please provide valid address with alphanumeric characters';
+					return errorMessages.address.invalid2;
 				}
 				break;
 			case 'contact':
 				if (value.trim() === '') {
-					return 'Contact number is required';
-				} else if (!/^\d+$/.test(value.trim()) || value.trim().length !== 10) {
-					return 'Please provide a valid contact number';
+					return errorMessages.contact.required;
+				} else if (!/^\d+$/.test(value) || value.length !== 10) {
+					return errorMessages.contact.invalid;
+				}
+				break;
+			case 'department':
+				if (!value) {
+					return errorMessages.department.required;
+				}
+				break;
+			case 'province':
+				if (!value) {
+					return errorMessages.province.required;
 				}
 				break;
 			default:
@@ -64,29 +67,35 @@ function ProfileEdit() {
 	}
 
 	useEffect(() => {
-		const errors = {};
-		if (hasInput.province) {
-			errors.province = validateFormField('province', formData.province);
+		if (formData.address || formData.contact || formData.province || formData.department) {
+			const errors = {
+				address: validateFormField('address', formData.address),
+				contact: validateFormField('contact', formData.contact),
+				province: validateFormField('province', formData.province),
+				department: validateFormField('department', formData.department)
+			};
+			setFormErrors(errors);
 		}
-		if (hasInput.department) {
-			errors.department = validateFormField('department', formData.department);
-		}
-		if (hasInput.address) {
-			errors.address = validateFormField('address', formData.address);
-		}
-		if (hasInput.contact) {
-			errors.contact = validateFormField('contact', formData.contact);
-		}
-		setFormErrors(errors);
-	}, [formData, hasInput]);
+	}, [formData]);
+
+	function handleInputChange(event) {
+		const { name, value } = event.target;
+		setFormData(prevState => ({ ...prevState, [name]: value }));
+	}
+
+	function handleInputBlur(event) {
+		const { name, value } = event.target;
+		const errors = validateFormField(name, value);
+		setFormErrors(prevErrors => ({ ...prevErrors, [name]: errors }));
+	}
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const errors = {
-			province: validateFormField('province', formData.province),
-			department: validateFormField('department', formData.department),
 			address: validateFormField('address', formData.address),
-			contact: validateFormField('contact', formData.contact)
+			contact: validateFormField('contact', formData.contact),
+			province: validateFormField('province', formData.province),
+			department: validateFormField('department', formData.department)
 		};
 		setFormErrors(errors);
 
@@ -108,8 +117,8 @@ function ProfileEdit() {
 					<tr><td className={styles["profile-left-content2"]}>Address</td>
 						<td >
 							<input type="text" name="address" autoComplete="off"
-								   className={styles["profile-right-content2"]}
-								   value={formData.address} onChange={handleInputChange}/>
+								   className={styles["profile-right-content2"]} value={formData.address}
+								   onBlur={handleInputBlur} onChange={handleInputChange}/>
 						</td>
 					</tr>
 					<tr><td></td>
@@ -119,10 +128,22 @@ function ProfileEdit() {
 					</tr>
 					<tr><td className={styles["profile-left-content2"]}>Province</td>
 						<td>
-							<select name="province" value={formData.province} onChange={handleInputChange}>
-								<option defaultValue="" />
-								<option>BC</option><option>AB</option><option>SK</option>
-								<option>MB</option><option>ON</option><option>QC</option>
+							<select name="province" value={formData.province}
+									onBlur={handleInputBlur} onChange={handleInputChange}>
+								<option defaultValue=""></option>
+								<option value="AB">Alberta</option>
+								<option value="BC">British Columbia</option>
+								<option value="MB">Manitoba</option>
+								<option value="NB">New Brunswick</option>
+								<option value="NL">Newfoundland and Labrador</option>
+								<option value="NS">Nova Scotia</option>
+								<option value="ON">Ontario</option>
+								<option value="PE">Prince Edward Island</option>
+								<option value="QC">Quebec</option>
+								<option value="SK">Saskatchewan</option>
+								<option value="NT">Northwest Territories</option>
+								<option value="NV">Nunavut</option>
+								<option value="YK">Yukon</option>
 							</select>
 						</td>
 					</tr>
@@ -133,9 +154,10 @@ function ProfileEdit() {
 					</tr>
 					<tr><td className={styles["profile-left-content2"]}>Department</td>
 						<td>
-							<select name="department" value={formData.department} onChange={handleInputChange}>
-								<option defaultValue="" />
-								<option>Sales</option><option>Engineering</option><option>Administration</option>
+							<select name="department" value={formData.department}
+									onBlur={handleInputBlur} onChange={handleInputChange}>
+								<option defaultValue="" /><option>Sales</option>
+								<option>Engineering</option><option>Administration</option>
 								<option>Customer Service</option><option>Technical Support</option>
 							</select>
 						</td>
@@ -148,8 +170,8 @@ function ProfileEdit() {
 					<tr><td className={styles["profile-left-content2"]}>Contact Number</td>
 						<td>
 							<input type="tel" name="contact" autoComplete="off"
-								   className={styles["profile-right-content2"]}
-								   value={formData.contact} onChange={handleInputChange}/>
+								   className={styles["profile-right-content2"]} value={formData.contact}
+								   onBlur={handleInputBlur} onChange={handleInputChange}/>
 						</td>
 					</tr>
 					<tr><td></td>

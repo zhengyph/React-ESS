@@ -53,7 +53,7 @@ function Profile() {
 			case 'contact':
 				if (value.trim() === '') {
 					return 'Contact number is required';
-				} else if (!/^\d+$/.test(value.trim()) || value.trim().length !== 10) {
+				} else if (!/^\d+$/.test(value) || value.length !== 10) {
 					return 'Please provide a valid contact number';
 				}
 				break;
@@ -65,17 +65,17 @@ function Profile() {
 
 	useEffect(() => {
 		const errors = {};
-		if (hasInput.province) {
-			errors.province = validateFormField('province', formData.province);
-		}
-		if (hasInput.department) {
-			errors.department = validateFormField('department', formData.department);
-		}
 		if (hasInput.address) {
 			errors.address = validateFormField('address', formData.address);
 		}
 		if (hasInput.contact) {
 			errors.contact = validateFormField('contact', formData.contact);
+		}
+		if (hasInput.province) {
+			errors.province = validateFormField('province', formData.province);
+		}
+		if (hasInput.department) {
+			errors.department = validateFormField('department', formData.department);
 		}
 		setFormErrors(errors);
 	}, [formData, hasInput]);
@@ -83,10 +83,10 @@ function Profile() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const errors = {
+			address: validateFormField('address', formData.address),
+			contact: validateFormField('contact', formData.contact),
 			province: validateFormField('province', formData.province),
 			department: validateFormField('department', formData.department),
-			address: validateFormField('address', formData.address),
-			contact: validateFormField('contact', formData.contact)
 		};
 		setFormErrors(errors);
 
@@ -141,9 +141,20 @@ function Profile() {
 					<tr><td className={styles["profile-left-content2"]}>Province</td>
 						<td>
 							<select name="province" value={formData.province} onChange={handleInputChange}>
-								<option defaultValue="" />
-								<option>BC</option><option>AB</option><option>SK</option>
-								<option>MB</option><option>ON</option><option>QC</option>
+								<option defaultValue=""></option>
+								<option value="AB">Alberta</option>
+								<option value="BC">British Columbia</option>
+								<option value="MB">Manitoba</option>
+								<option value="NB">New Brunswick</option>
+								<option value="NL">Newfoundland and Labrador</option>
+								<option value="NS">Nova Scotia</option>
+								<option value="ON">Ontario</option>
+								<option value="PE">Prince Edward Island</option>
+								<option value="QC">Quebec</option>
+								<option value="SK">Saskatchewan</option>
+								<option value="NT">Northwest Territories</option>
+								<option value="NV">Nunavut</option>
+								<option value="YK">Yukon</option>
 							</select>
 						</td>
 					</tr>

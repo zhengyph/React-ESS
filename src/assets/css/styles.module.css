@@ -20,6 +20,7 @@
 
 .storeLoginInfo {
     align-items: baseline;
+    padding-bottom: 5px;
     margin-left: 30px;
     color: #70C6F5;
     display: flex;

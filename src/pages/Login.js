@@ -33,19 +33,18 @@ function Login() {
 			}
 		};
 
-		const trimmedValue = value.trim();
 		switch (name) {
 			case 'email':
-				if (!trimmedValue) {
+				if (!value.trim()) {
 					return errorMessages.email.required;
-				} else if (!/\S+@\S+\.\S+/.test(trimmedValue)) {
+				} else if (!/\S+@\S+\.\S+/.test(value)) {
 					return errorMessages.email.invalid;
 				}
 				break;
 			case 'password':
-				if (!trimmedValue) {
+				if (!value.trim()) {
 					return errorMessages.password.required;
-				} else if (trimmedValue.length < 6) {
+				} else if (value.trim().length < 6) {
 					return errorMessages.password.invalid;
 				}
 				break;
@@ -74,7 +73,7 @@ function Login() {
 	}, [formData]);
 
 	/**
-	 * 在用户离开输入框时进行检查，通过监听 onChange 事件来保存输入的文本。
+	 * 通过监听 onBlur 事件，在用户离开输入框时进行检查，通过监听 onChange 事件来保存输入的文本。
 	 * 通过监听 onBlur 事件来调用表单验证函数 validateFormField，并将验证结果更新到 formErrors 状态中。
 	 */
 	const handleInput = (event) => {
@@ -88,18 +87,17 @@ function Login() {
 	 * handleSubmit 函数在用户点击按钮时进行检查和发送请求。
 	 * dispatch 向 store 分发 actions，告诉 Redux 去执行这些 actions。
 	 */
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		const errors = {
 			email: validateFormField('email', formData.email),
 			password: validateFormField('password', formData.password)
 		};
+		setFormErrors(errors); // 确保在提交操作之前将表单的错误信息保存在组件的状态中
 
-		/* 如果错误信息 errors 里每个 key 的值都为空，则进行跳转 */
-		const hasErrors = Object.values(errors).some(value => value !== '');
-
-		if (!hasErrors) {
+		/* 如果错误信息 errors 里每个 key 的 value 都为空，则进行跳转 */
+		if (Object.values(errors).every(value => value === '')) {
 			/* 用于更新 store 中的 email 属性和 password 属性 */
 			dispatch(setEmail(formData.email));
 			dispatch(setPassword(formData.password));
@@ -115,9 +113,9 @@ function Login() {
 			}
 
 			/* 先等待当前执行栈中的任务完成，再执行跳转 */
-			setTimeout(() => { navigate('/complete-your-profile') });
+			await new Promise(resolve => setTimeout(resolve, 0));
+			navigate('/complete-your-profile');
 		}
-		setFormErrors(errors);
 	}
 
 	return (
