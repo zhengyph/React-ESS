@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux";
-import OrderItem from "../components/OrderItem";
-import styles from "../assets/css/styles.module.css";
+import { useSelector } from 'react-redux';
+import OrderItem from '../components/OrderItem';
+import styles from '../assets/css/styles.module.css';
 
 
 function OrderStatus() {
-
 	/* 找出在 cartSlice.js 中被选中的物品 */
 	const selectedItems = useSelector(
 		state => state.cart_slice.item_list

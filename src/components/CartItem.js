@@ -1,4 +1,4 @@
-import renderStars from "./SetStars";
+import renderStars from './SetStars';
 import styles from '../assets/css/styles.module.css';
 
 

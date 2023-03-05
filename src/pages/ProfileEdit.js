@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import {useDispatch, useSelector} from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setAddress, setContact, setDepartment, setProvince } from "../store/slices/profileSlice";
-import { validateProfileField } from "../components/ValidateField";
-import styles from "../assets/css/styles.module.css";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { validateProfileField } from '../components/ValidateField';
+import { setAddress, setContact, setDepartment, setProvince } from '../store/slices/profileSlice';
+import styles from '../assets/css/styles.module.css';
 
 
 function ProfileEdit() {

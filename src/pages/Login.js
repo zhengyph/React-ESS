@@ -1,11 +1,11 @@
-import { useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { validateLoginField }  from '../components/ValidateField';
 import { setEmail, setPassword, signIn } from '../store/slices/loginSlice';
-import { validateLoginField }  from "../components/ValidateField";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import styles from '../assets/css/styles.module.css'
+import styles from '../assets/css/styles.module.css';
 
 
 function Login() {

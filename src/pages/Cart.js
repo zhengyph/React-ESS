@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { handleToggleItem, handleToggleAllItems, overBudget } from '../store/slices/cartSlice';
 import CartItem from '../components/CartItem';
-import styles from '../assets/css/styles.module.css'
+import styles from '../assets/css/styles.module.css';
 
 
 function Cart() {

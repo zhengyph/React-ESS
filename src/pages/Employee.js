@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import styles from "../assets/css/styles.module.css";
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import styles from '../assets/css/styles.module.css';
 
 
 function Employee() {
