@@ -2,6 +2,7 @@ import { useEffect, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setEmail, setPassword, signIn } from '../store/slices/loginSlice';
+import { validateLoginField }  from "../components/ValidateField";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import styles from '../assets/css/styles.module.css'
@@ -31,40 +32,6 @@ function Login() {
 	/* 点击切换是否显示密码文本 */
 	const togglePasswordVisibility = () => { setIsPasswordVisible(!isPasswordVisible); };
 
-	/* 检查输入框内的邮箱或密码文本是否合法 */
-	function validateFormField(name, value) {
-		const errorMessages = {
-			email: {
-				required: 'Email is required',
-				invalid: 'Your email is invalid',
-			},
-			password: {
-				required: 'Password is required',
-				invalid: 'Your password must be at least 6 characters',
-			}
-		};
-
-		switch (name) {
-			case 'email':
-				if (!value.trim()) {
-					return errorMessages.email.required;
-				} else if (!/\S+@\S+\.\S+/.test(value)) {
-					return errorMessages.email.invalid;
-				}
-				break;
-			case 'password':
-				if (!value.trim()) {
-					return errorMessages.password.required;
-				} else if (value.trim().length < 6) {
-					return errorMessages.password.invalid;
-				}
-				break;
-			default:
-				return '';
-		}
-		return '';
-	}
-
 	/**
 	 * useEffect: 监听表单数据的变化，并在表单数据变化时更新表单错误信息的状态。
 	 * 通过监听 formData 的变化来调用表单验证函数 validateForm，并将验证结果更新到 formErrors 状态中。
@@ -78,10 +45,10 @@ function Login() {
 		 * 只有在用户开始输入时，formData 中的值才会发生变化，从而触发这部分代码，进行错误检查并更新错误信息状态。
 		 */
 		if (hasInput.email) {
-			errors.email = validateFormField('email', formData.email);
+			errors.email = validateLoginField('email', formData.email);
 		}
 		if (hasInput.password) {
-			errors.password = validateFormField('password', formData.password);
+			errors.password = validateLoginField('password', formData.password);
 		}
 		setFormErrors(errors);
 	}, [formData, hasInput]);
@@ -104,7 +71,7 @@ function Login() {
 		 * 因此可以避免不必要的重新渲染。
 		 */
 		const { name, value } = event.target;
-		const errors = validateFormField(name, value);
+		const errors = validateLoginField(name, value);
 		setFormData(prevData => ({ ...prevData, [name]: value }));
 		setFormErrors(prevErrors => ({ ...prevErrors, [name]: errors }));
 		setHasInput(prevHasInput => ({ ...prevHasInput, [name]: true }));
@@ -118,8 +85,8 @@ function Login() {
 		event.preventDefault();
 
 		const errors = {
-			email: validateFormField('email', formData.email),
-			password: validateFormField('password', formData.password)
+			email: validateLoginField('email', formData.email),
+			password: validateLoginField('password', formData.password)
 		};
 		setFormErrors(errors); // 确保在提交操作之前将表单的错误信息保存在组件的状态中
 

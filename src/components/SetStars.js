@@ -1,6 +1,6 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faStar as solidStar, faStarHalfAlt as halfStar} from "@fortawesome/free-solid-svg-icons";
-import {faStar as regularStar} from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as solidStar, faStarHalfAlt as halfStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 
 function starColor(num) {
 	if (num >= 5) {

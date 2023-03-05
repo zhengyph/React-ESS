@@ -6,7 +6,6 @@ import styles from "../assets/css/styles.module.css";
 function Employee() {
 
 	const navigate = useNavigate();
-
 	const employeeInfo = useSelector(state => state.profile_slice);
 	const NAMES = ["First Name", "Last Name", "Date of Birth", "Address",
 		"Province", "Country", "Contact Number", "Department", "Role"];

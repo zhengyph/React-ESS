@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import profileSlice, { setAddress, setContact, setDepartment, setProvince } from "../store/slices/profileSlice";
-import styles from "../assets/css/styles.module.css";
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import profileSlice, { setAddress, setContact, setDepartment, setProvince } from '../store/slices/profileSlice';
+import { validateProfileField }  from "../components/ValidateField";
+import styles from '../assets/css/styles.module.css';
 
 
 function Profile() {
@@ -22,60 +23,26 @@ function Profile() {
 		province: false, department: false, address: false, contact: false
 	});
 
-	function validateFormField(name, value) {
-		switch (name) {
-			case 'province':
-				if (!value) {
-					return 'Province is required';
-				}
-				break;
-			case 'department':
-				if (!value) {
-					return 'Department is required';
-				}
-				break;
-			case 'address':
-				if (value.trim() === '') {
-					return 'Address is required';
-				} else if (value.length > 100) {
-					return 'You have exceeded the maximum input limit of 100 characters';
-				} else if (!/(?=.*\d)(?=.*[a-zA-Z])(?=.*\s)/.test(value)) {
-					return 'Please provide valid address with alphanumeric characters';
-				}
-				break;
-			case 'contact':
-				if (value.trim() === '') {
-					return 'Contact number is required';
-				} else if (!/^\d+$/.test(value) || value.length !== 10) {
-					return 'Please provide a valid contact number';
-				}
-				break;
-			default:
-				return '';
-		}
-		return '';
-	}
-
 	useEffect(() => {
 		const errors = {};
 		if (hasInput.address) {
-			errors.address = validateFormField('address', formData.address);
+			errors.address = validateProfileField('address', formData.address);
 		}
 		if (hasInput.contact) {
-			errors.contact = validateFormField('contact', formData.contact);
+			errors.contact = validateProfileField('contact', formData.contact);
 		}
 		if (hasInput.province) {
-			errors.province = validateFormField('province', formData.province);
+			errors.province = validateProfileField('province', formData.province);
 		}
 		if (hasInput.department) {
-			errors.department = validateFormField('department', formData.department);
+			errors.department = validateProfileField('department', formData.department);
 		}
 		setFormErrors(errors);
 	}, [formData, hasInput]);
 
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
-		const errors = validateFormField(name, value);
+		const errors = validateProfileField(name, value);
 		setFormData(prevData => ({ ...prevData, [name]: value }));
 		setFormErrors(prevErrors => ({ ...prevErrors, [name]: errors }));
 		setHasInput(prevHasInput => ({ ...prevHasInput, [name]: true }));
@@ -84,10 +51,10 @@ function Profile() {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const errors = {
-			address: validateFormField('address', formData.address),
-			contact: validateFormField('contact', formData.contact),
-			province: validateFormField('province', formData.province),
-			department: validateFormField('department', formData.department),
+			address: validateProfileField('address', formData.address),
+			contact: validateProfileField('contact', formData.contact),
+			province: validateProfileField('province', formData.province),
+			department: validateProfileField('department', formData.department),
 		};
 		setFormErrors(errors);
 

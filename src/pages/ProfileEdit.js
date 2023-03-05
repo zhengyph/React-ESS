@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setAddress, setContact, setDepartment, setProvince } from "../store/slices/profileSlice";
+import { validateProfileField } from "../components/ValidateField";
 import styles from "../assets/css/styles.module.css";
 
 
@@ -9,9 +10,13 @@ function ProfileEdit() {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const employeeInfo = useSelector(state => state.profile_slice);
 
 	const [formData, setFormData] = useState({
-		province: '', department: '', address: '', contact: ''
+		address: employeeInfo['usr_address'],
+		contact: employeeInfo['usr_contact'],
+		province: employeeInfo['usr_province'],
+		department: employeeInfo['usr_department']
 	});
 
 	const [formErrors, setFormErrors] = useState({
@@ -22,74 +27,26 @@ function ProfileEdit() {
 		province: false, department: false, address: false, contact: false
 	});
 
-	function validateFormField(name, value) {
-		const errorMessages = {
-			address: {
-				required: 'Address is required',
-				invalid1: 'You have exceeded the maximum input limit of 100 characters',
-				invalid2: 'Please provide a valid address with alphanumeric characters'
-			},
-			contact: {
-				required: 'Contact number is required',
-				invalid: 'Please provide a valid contact number'
-			},
-			department: { required: 'Department is required' },
-			province: { required: 'Province is required' }
-		}
-
-		switch (name) {
-			case 'address':
-				if (value.trim() === '') {
-					return errorMessages.address.required;
-				} else if (value.length > 100) {
-					return errorMessages.address.invalid1;
-				} else if (!/(?=.*\d)(?=.*[a-zA-Z])(?=.*\s)/.test(value)) {
-					return errorMessages.address.invalid2;
-				}
-				break;
-			case 'contact':
-				if (value.trim() === '') {
-					return errorMessages.contact.required;
-				} else if (!/^\d+$/.test(value) || value.length !== 10) {
-					return errorMessages.contact.invalid;
-				}
-				break;
-			case 'department':
-				if (!value) {
-					return errorMessages.department.required;
-				}
-				break;
-			case 'province':
-				if (!value) {
-					return errorMessages.province.required;
-				}
-				break;
-			default:
-				return '';
-		}
-		return '';
-	}
-
 	useEffect(() => {
 		const errors = {};
 		if (hasInput.address) {
-			errors.address = validateFormField('address', formData.address);
+			errors.address = validateProfileField('address', formData.address);
 		}
 		if (hasInput.contact) {
-			errors.contact = validateFormField('contact', formData.contact);
+			errors.contact = validateProfileField('contact', formData.contact);
 		}
 		if (hasInput.province) {
-			errors.province = validateFormField('province', formData.province);
+			errors.province = validateProfileField('province', formData.province);
 		}
 		if (hasInput.department) {
-			errors.department = validateFormField('department', formData.department);
+			errors.department = validateProfileField('department', formData.department);
 		}
 		setFormErrors(errors);
 	}, [formData, hasInput]);
 
 	const handleInput = (event) => {
 		const { name, value } = event.target;
-		const errors = validateFormField(name, value);
+		const errors = validateProfileField(name, value);
 		setFormData(prevData => ({ ...prevData, [name]: value }));
 		setFormErrors(prevErrors => ({ ...prevErrors, [name]: errors }));
 		setHasInput(prevHasInput => ({ ...prevHasInput, [name]: true }));
@@ -98,10 +55,10 @@ function ProfileEdit() {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const errors = {
-			address: validateFormField('address', formData.address),
-			contact: validateFormField('contact', formData.contact),
-			province: validateFormField('province', formData.province),
-			department: validateFormField('department', formData.department)
+			address: validateProfileField('address', formData.address),
+			contact: validateProfileField('contact', formData.contact),
+			province: validateProfileField('province', formData.province),
+			department: validateProfileField('department', formData.department)
 		};
 		setFormErrors(errors);
 
