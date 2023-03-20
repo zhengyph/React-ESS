@@ -10,7 +10,7 @@ function RootLayout() {
 	const dispatch = useDispatch();
 
 	/* 获取当前登录状态 */
-	const isLoggedIn = useSelector(state => state.login_slice.is_signed_in);
+	const isSignedIn = useSelector(state => state.login_slice.is_signed_in);
 
 	useEffect(() => {
 		/* 获取当前本地储存中是否有登录信息 */
@@ -22,10 +22,10 @@ function RootLayout() {
 		}
 
 		/* 监听路由变化。如果没有登录且没有储存登录信息在本地，则只允许停留在 login 页面 */
-		if (!isLoggedIn && !isRemembered && navigate) {
+		if (!isSignedIn && !isRemembered && navigate) {
 			navigate('/login', { replace: true });
 		}
-	}, [dispatch, isLoggedIn, navigate]);
+	}, [dispatch, isSignedIn, navigate]);
 
 	/* 用于进行登出操作 */
 	const handleLogout = () => {
@@ -38,7 +38,7 @@ function RootLayout() {
 			<header>
 				<h1>Employee Self Service</h1>
 				<nav>
-					{isLoggedIn && <NavLink onClick={handleLogout} to="/login">Sign Out</NavLink>}
+					{isSignedIn && <NavLink onClick={handleLogout} to="/login">Sign Out</NavLink>}
 				</nav>
 			</header>
 			<main>

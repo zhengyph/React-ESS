@@ -37,7 +37,7 @@ function Employee() {
 					</tbody>
 				</table>
 			</div>
-			<div style={{paddingTop:"15px"}}>
+			<div className={styles.employeeBtn}>
 				<button onClick={handleSubmitProfileUpdate}>Edit Profile</button>
 				<button onClick={handleSubmitCart}>Select Assets</button>
 			</div>

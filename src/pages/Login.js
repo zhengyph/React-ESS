@@ -54,8 +54,8 @@ function Login() {
 	}, [formData, hasInput]);
 
 	/**
-	 * 通过监听 onBlur 事件，在用户离开输入框时进行检查，通过监听 onChange 事件来保存输入的文本。
-	 * 通过监听 onBlur 事件来调用表单验证函数 validateFormField，并将验证结果更新到 formErrors 状态中。
+	 * 1. 通过监听 onBlur 事件，在用户离开输入框时进行检查，通过监听 onChange 事件来保存输入的文本。
+	 * 2. 通过监听 onChange 事件来调用表单验证函数 validateFormField，并将验证结果更新到 formErrors 状态中。
 	 */
 	const handleInput = (event) => {
 		/**

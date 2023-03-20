@@ -94,6 +94,10 @@
     max-width: 630px;
 }
 
+.employeeBtn {
+    padding-top: 15px;
+}
+
 .empLeftText {
     padding: 10px 0 10px 45px;
     text-align: left;
